@@ -15,11 +15,20 @@ namespace HangfireDemo.Controllers
         }
 
         [HttpGet("test_bk_job")]
-        public ActionResult TestBackgroundJob()
+        public ActionResult TestImdeiatelyBackgroundJob()
         {
             BackgroundJob.Enqueue(()=> SendMSG("ahmed abd elsalam"));
 
             return Ok();    
+        }
+        [HttpGet("test_bk_job2")]
+        public ActionResult TestScheduleBackgroundJob()
+        {
+            var time = DateTime.Now;
+            Console.WriteLine(time);
+            BackgroundJob.Schedule(() => SendMSG("ahmed abd elsalam") , TimeSpan.FromMinutes(1));
+
+            return Ok();
         }
     }
 }
